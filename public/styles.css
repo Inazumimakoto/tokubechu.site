@@ -1,0 +1,171 @@
+:root {
+  color-scheme: light;
+  --paper: #fff1f7;
+  --rose: #ca648f;
+  --phrase-width: min(82vw, 1120px);
+  --phrase-duration: 1.9s;
+  --first-delay: 250ms;
+  --second-delay: 2.2s;
+  --pass-easing: cubic-bezier(.08, .72, .92, .28);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--paper);
+}
+
+body {
+  overflow: hidden;
+  font-family: "Hiragino Mincho ProN", serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #fff1f7;
+}
+
+.ambient__pink, .ambient__lilac {
+  position: absolute;
+  inset: -22%;
+  will-change: transform;
+  filter: blur(56px);
+}
+
+.ambient__pink {
+  background:
+    radial-gradient(ellipse at 18% 19%, #f9d2e7 0%, transparent 37%),
+    radial-gradient(ellipse at 90% 72%, #f8cfe5 0%, transparent 38%),
+    radial-gradient(ellipse at 46% 94%, #fbd6e8 0%, transparent 40%);
+  animation: pink-drift 23s ease-in-out infinite alternate;
+}
+
+.ambient__lilac {
+  background:
+    radial-gradient(ellipse at 15% 72%, #e1e7fb 0%, transparent 31%),
+    radial-gradient(ellipse at 73% 16%, #e6e9fb 0%, transparent 31%),
+    radial-gradient(ellipse at 93% 38%, #eed9f3 0%, transparent 32%);
+  animation: lilac-drift 29s ease-in-out infinite alternate;
+  opacity: .82;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: 24px;
+  isolation: isolate;
+}
+
+.page-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.phrase {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Both crops use the same source pixel scale (1517px and 573px wide). */
+.phrase--first { width: var(--phrase-width); }
+.phrase--second { width: calc(var(--phrase-width) * 573 / 1517); }
+
+.phrase__motion {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.phrase__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 1px 1px #ad63896b);
+}
+
+.is-ready .phrase--first .phrase__motion {
+  animation:
+    first-pass var(--phrase-duration) var(--pass-easing) var(--first-delay) both,
+    phrase-fade var(--phrase-duration) linear var(--first-delay) both;
+}
+
+.is-ready .phrase--second .phrase__motion {
+  animation:
+    second-pass var(--phrase-duration) var(--pass-easing) var(--second-delay) both,
+    phrase-fade var(--phrase-duration) linear var(--second-delay) both;
+}
+
+@keyframes first-pass {
+  from { transform: translate3d(80vw, -75vh, 0) rotate(21deg); }
+  to { transform: translate3d(-80vw, 75vh, 0) rotate(27deg); }
+}
+
+@keyframes second-pass {
+  from { transform: translate3d(-80vw, -75vh, 0) rotate(-6deg); }
+  to { transform: translate3d(80vw, 75vh, 0) rotate(11deg); }
+}
+
+@keyframes phrase-fade {
+  0%, 100% { opacity: 0; }
+  12%, 78% { opacity: 1; }
+}
+
+@keyframes pink-drift {
+  from { transform: translate3d(-3%, -2%, 0) rotate(-3deg) scale(1.02); }
+  to { transform: translate3d(4%, 5%, 0) rotate(5deg) scale(1.12); }
+}
+
+@keyframes lilac-drift {
+  from { transform: translate3d(2%, 3%, 0) rotate(3deg) scale(1.04); }
+  to { transform: translate3d(-5%, -4%, 0) rotate(-6deg) scale(1.12); }
+}
+
+@media (max-width: 600px) {
+  :root { --phrase-width: 86vw; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --phrase-width: min(86vw, 900px, calc((100svh - 72px) * 1517 / 760));
+  }
+  .ambient__pink, .ambient__lilac,
+  .is-ready .phrase--first .phrase__motion,
+  .is-ready .phrase--second .phrase__motion {
+    animation: none;
+    will-change: auto;
+  }
+  .stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+  }
+  .phrase { position: static; transform: none; flex: none; }
+  .phrase__motion { opacity: 1; transform: none; }
+}
+
+.has-asset-error .phrase { display: none; }
+.has-asset-error .page-title {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip-path: none;
+  font-size: clamp(2rem, 8vw, 6rem);
+  color: var(--rose);
+}
