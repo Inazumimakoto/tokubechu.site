@@ -109,14 +109,20 @@ body {
     phrase-fade var(--phrase-duration) linear var(--second-delay) both;
 }
 
+.is-ready.is-intro-paused .phrase__motion,
+.is-intro-paused .ambient__pink,
+.is-intro-paused .ambient__lilac {
+  animation-play-state: paused;
+}
+
 @keyframes first-pass {
   from { transform: translate3d(80vw, -75vh, 0) rotate(21deg); }
   to { transform: translate3d(-80vw, 75vh, 0) rotate(27deg); }
 }
 
 @keyframes second-pass {
-  from { transform: translate3d(-80vw, -75vh, 0) rotate(23deg); }
-  to { transform: translate3d(80vw, 75vh, 0) rotate(29deg); }
+  from { transform: translate3d(-80vw, -75vh, 0) rotate(-23deg); }
+  to { transform: translate3d(80vw, 75vh, 0) rotate(-29deg); }
 }
 
 @keyframes phrase-fade {
@@ -160,7 +166,7 @@ body {
 
 .collection {
   position: relative;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   gap: 32px;
@@ -171,7 +177,7 @@ body {
   visibility: hidden;
 }
 
-.is-intro-complete .collection { visibility: visible; }
+.is-intro-complete .collection { display: flex; visibility: visible; }
 
 .collection__header { text-align: center; }
 .collection__title {
