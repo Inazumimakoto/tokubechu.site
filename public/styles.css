@@ -304,11 +304,19 @@ body {
 .video-caption h2 span { margin-left: 10px; font-size: 11px; color: #886879; }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .video-caption a { font-family: "Hiragino Kaku Gothic ProN", sans-serif; font-size: 11px; white-space: nowrap; }
+.site-credit {
+  text-align: center;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #795367;
+}
 button:focus-visible, a:focus-visible, .video-track:focus-visible { outline: 2px solid #a13e6b; outline-offset: 4px; }
 .reveal { opacity: 0; transform: translateY(16px); }
 .is-intro-complete .reveal { animation: reveal .65s ease-out both; }
 .is-intro-complete .video-controls { animation-delay: .10s; }
 .is-intro-complete .video-track { animation-delay: .20s; }
+.is-intro-complete .site-credit { animation-delay: .30s; }
 @keyframes reveal { to { opacity: 1; transform: none; } }
 
 @media (max-width: 600px) {
