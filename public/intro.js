@@ -2,16 +2,34 @@ function setupIntro() {
   const body = document.body;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const images = [...document.querySelectorAll('.phrase__image')];
-  const lastPhrase = document.querySelector('.phrase--second .phrase__motion');
+  const phrases = [...document.querySelectorAll('.phrase__motion')];
   let run = 0;
+  let frame = 0;
+  let previousFrame = null;
+  let frozen = false;
 
-  const syncVisibility = () => body.classList.toggle('is-intro-paused', document.hidden);
-  const finishIntro = () => body.classList.add('is-intro-complete');
+  const syncVisibility = () => {
+    previousFrame = null;
+    body.classList.toggle('is-intro-paused', document.hidden || frozen);
+  };
+  const stopClock = () => {
+    cancelAnimationFrame(frame);
+    previousFrame = null;
+  };
+  const finishIntro = () => {
+    stopClock();
+    body.classList.add('is-intro-complete');
+  };
 
-  lastPhrase.addEventListener('animationend', event => {
-    if (event.animationName === 'second-pass') finishIntro();
-  });
   document.addEventListener('visibilitychange', syncVisibility);
+  document.addEventListener('freeze', () => {
+    frozen = true;
+    syncVisibility();
+  });
+  document.addEventListener('resume', () => {
+    frozen = false;
+    syncVisibility();
+  });
   reducedMotion.addEventListener('change', event => {
     if (event.matches) finishIntro();
   });
@@ -34,6 +52,7 @@ function setupIntro() {
 
   async function startIntro() {
     const currentRun = ++run;
+    stopClock();
     body.classList.remove('is-ready', 'is-intro-complete');
     syncVisibility();
     if (reducedMotion.matches) {
@@ -48,12 +67,45 @@ function setupIntro() {
       return;
     }
 
-    // Let the decoded lettering and initial layout paint before starting the clock.
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      if (currentRun === run && !body.classList.contains('is-intro-complete')) {
+    // CSS supplies the artwork's motion, but rendered frames supply its clock.
+    // A new tab or a suspended renderer must not consume the first phrase unseen.
+    frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        if (currentRun !== run || body.classList.contains('is-intro-complete')) return;
         body.classList.add('is-ready');
-      }
-    }));
+        const animations = phrases.flatMap(phrase => phrase.getAnimations());
+        if (!animations.length) {
+          finishIntro();
+          return;
+        }
+        const endTime = Math.max(...animations.map(animation => animation.effect.getComputedTiming().endTime));
+        let elapsed = 0;
+        animations.forEach(animation => {
+          animation.pause();
+          animation.currentTime = 0;
+        });
+
+        const advance = timestamp => {
+          if (currentRun !== run || body.classList.contains('is-intro-complete')) return;
+          if (document.hidden || frozen) {
+            previousFrame = null;
+          } else {
+            if (previousFrame !== null) {
+              // Keep the normal tempo; discard time when the browser couldn't draw.
+              elapsed += Math.min(Math.max(timestamp - previousFrame, 0), 100);
+            }
+            previousFrame = timestamp;
+            animations.forEach(animation => { animation.currentTime = elapsed; });
+            if (elapsed >= endTime) {
+              finishIntro();
+              return;
+            }
+          }
+          frame = requestAnimationFrame(advance);
+        };
+        frame = requestAnimationFrame(advance);
+      });
+    });
   }
 
   window.addEventListener('pageshow', event => {

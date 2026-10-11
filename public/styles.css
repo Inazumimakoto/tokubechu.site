@@ -101,12 +101,14 @@ body {
   animation:
     first-pass var(--phrase-duration) var(--pass-easing) var(--first-delay) both,
     phrase-fade var(--phrase-duration) linear var(--first-delay) both;
+  animation-play-state: paused;
 }
 
 .is-ready .phrase--second .phrase__motion {
   animation:
     second-pass var(--phrase-duration) var(--pass-easing) var(--second-delay) both,
     phrase-fade var(--phrase-duration) linear var(--second-delay) both;
+  animation-play-state: paused;
 }
 
 .is-ready.is-intro-paused .phrase__motion,
