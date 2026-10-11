@@ -1,8 +1,8 @@
 const track = document.querySelector('.video-track');
 const slides = [...document.querySelectorAll('.video-slide')];
 const tabs = [...document.querySelectorAll('.video-tab')];
+const tabList = document.querySelector('.video-tabs');
 const arrows = [...document.querySelectorAll('.video-arrow')];
-const position = document.querySelector('#video-position');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let activeSlide = 0;
 let scrollFrame;
@@ -18,10 +18,11 @@ function selectSlide(index) {
   slides.forEach((slide, slideIndex) => {
     if (slideIndex !== index) stopVideo(slide);
   });
-  tabs.forEach((tab, tabIndex) => tab.setAttribute('aria-pressed', String(tabIndex === index)));
+  tabs.forEach(tab => tab.setAttribute('aria-pressed', String(tab.dataset.category === slides[index].dataset.category)));
+  const activeTab = tabs.find(tab => tab.dataset.category === slides[index].dataset.category);
+  if (activeTab) tabList.scrollTo({ left: activeTab.offsetLeft - tabs[0].offsetLeft - (tabList.clientWidth - activeTab.offsetWidth) / 2, behavior: reducedMotion.matches ? 'instant' : 'smooth' });
   arrows[0].disabled = index === 0;
   arrows[1].disabled = index === slides.length - 1;
-  position.textContent = `${String(index + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')} · ${tabs[index].textContent}`;
 }
 
 function scrollToSlide(index, behavior = reducedMotion.matches ? 'instant' : 'smooth') {
@@ -34,7 +35,10 @@ function scrollToSlide(index, behavior = reducedMotion.matches ? 'instant' : 'sm
   });
 }
 
-tabs.forEach((tab, index) => tab.addEventListener('click', () => scrollToSlide(index)));
+tabs.forEach(tab => tab.addEventListener('click', () => {
+  const index = slides.findIndex(slide => slide.dataset.category === tab.dataset.category);
+  if (index !== -1) scrollToSlide(index);
+}));
 arrows.forEach(arrow => arrow.addEventListener('click', () => scrollToSlide(activeSlide + Number(arrow.dataset.direction))));
 
 track.addEventListener('scroll', () => {
@@ -77,7 +81,7 @@ slides.forEach((slide, index) => {
     url.searchParams.set('playsinline', '1');
     url.searchParams.set('origin', window.location.origin);
     iframe.src = url.href;
-    iframe.title = `とくべチュ、して — ${tabs[index].textContent}`;
+    iframe.title = slide.querySelector('.video-caption h2').textContent;
     iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
     iframe.allowFullscreen = true;
     iframe.referrerPolicy = 'strict-origin-when-cross-origin';
