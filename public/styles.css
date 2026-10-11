@@ -82,9 +82,9 @@ body {
   user-select: none;
 }
 
-/* Both crops use the same source pixel scale (1517px and 573px wide). */
+/* The thick assets are normalized to matching letter heights. */
 .phrase--first { width: var(--phrase-width); }
-.phrase--second { width: calc(var(--phrase-width) * 573 / 1517); }
+.phrase--second { width: calc(var(--phrase-width) * 979 / 2030); }
 
 .phrase__motion {
   opacity: 0;
@@ -141,7 +141,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --phrase-width: min(86vw, 900px, calc((100svh - 72px) * 1517 / 760));
+    --phrase-width: min(86vw, 900px, calc((100svh - 72px) * 2030 / 1073));
   }
   .ambient__pink, .ambient__lilac,
   .is-ready .phrase--first .phrase__motion,
