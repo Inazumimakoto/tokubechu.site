@@ -5,7 +5,7 @@
   --phrase-width: min(82vw, 1120px);
   --phrase-duration: 1.9s;
   --first-delay: 250ms;
-  --second-delay: 2.2s;
+  --second-delay: 1.55s;
   --pass-easing: cubic-bezier(.08, .72, .92, .28);
 }
 
@@ -95,7 +95,9 @@ body {
   display: block;
   width: 100%;
   height: auto;
-  filter: drop-shadow(0 1px 1px #ad63896b);
+  filter:
+    drop-shadow(0 2px 1px #613449a6)
+    drop-shadow(0 7px 14px #85436b40);
 }
 
 .is-ready .phrase--first .phrase__motion {
