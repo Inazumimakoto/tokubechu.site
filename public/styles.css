@@ -79,9 +79,9 @@ body {
   user-select: none;
 }
 
-/* The thick assets are normalized to matching letter heights. */
+/* Thin assets: 1517×406 and 573×354, scaled to matching letter heights. */
 .phrase--first { width: var(--phrase-width); }
-.phrase--second { width: calc(var(--phrase-width) * 979 / 2030); }
+.phrase--second { width: calc(var(--phrase-width) * 232638 / 537018); }
 
 .phrase__motion {
   opacity: 0;
@@ -146,7 +146,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --phrase-width: min(86vw, 900px, calc((100svh - 72px) * 2030 / 1073));
+    --phrase-width: min(86vw, 900px, calc((100svh - 72px) * 1517 / 812));
   }
   .ambient__pink, .ambient__lilac,
   .is-ready .phrase--first .phrase__motion,
@@ -188,8 +188,8 @@ body {
   margin: 0 auto;
   gap: 8px;
 }
-.collection__word--first { width: calc((100% - 8px) * 2030 / 3009); }
-.collection__word--second { width: calc((100% - 8px) * 979 / 3009); }
+.collection__word--first { width: calc((100% - 8px) * 537018 / 769656); }
+.collection__word--second { width: calc((100% - 8px) * 232638 / 769656); }
 .collection__artist {
   margin: 8px 0 0;
   font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
