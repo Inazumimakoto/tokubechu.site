@@ -194,16 +194,19 @@ body {
 
 .video-gallery { min-width: 0; }
 .video-controls {
-  display: flex;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr) 92px;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   margin-bottom: 18px;
 }
 .video-tabs {
   display: flex;
+  grid-column: 2;
+  justify-self: center;
   gap: 24px;
   min-width: 0;
+  max-width: 100%;
   overflow-x: auto;
   scrollbar-width: none;
 }
@@ -223,7 +226,7 @@ body {
   transition: color .2s, border-color .2s;
 }
 .video-tab[aria-pressed="true"] { border-color: #a13e6b; color: #a13e6b; }
-.video-arrows { display: flex; flex-shrink: 0; gap: 8px; }
+.video-arrows { display: flex; grid-column: 3; justify-self: end; gap: 8px; }
 .video-arrow {
   display: grid;
   place-items: center;
@@ -248,12 +251,11 @@ body {
 }
 .video-track::-webkit-scrollbar { display: none; }
 .video-slide {
-  flex: 0 0 94%;
+  flex: 0 0 100%;
   min-width: 0;
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
-.video-track::after { content: ""; flex: 0 0 calc(6% - 24px); }
 .video-frame {
   position: relative;
   width: 100%;
@@ -309,12 +311,11 @@ button:focus-visible, a:focus-visible, .video-track:focus-visible { outline: 2px
 
 @media (max-width: 600px) {
   .collection { padding: 40px 20px 24px; gap: 28px; }
-  .video-tabs { gap: 18px; }
+  .video-controls { grid-template-columns: minmax(0, 1fr); }
+  .video-tabs { grid-column: 1; gap: 18px; }
   .video-tab { font-size: 13px; }
   .video-arrows { display: none; }
   .video-track { gap: 14px; }
-  .video-slide { flex-basis: 94%; }
-  .video-track::after { flex-basis: calc(6% - 14px); }
   .video-caption { gap: 10px; }
   .video-caption h2 { font-size: 16px; }
   .video-caption h2 span { display: block; margin: 6px 0 0; }
@@ -323,8 +324,6 @@ button:focus-visible, a:focus-visible, .video-track:focus-visible { outline: 2px
 @media (max-width: 360px) {
   .video-tabs { gap: 12px; }
   .video-tab { font-size: 12px; }
-  .video-slide { flex-basis: 100%; }
-  .video-track::after { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .is-intro-complete .reveal { animation: none; opacity: 1; transform: none; }
