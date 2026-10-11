@@ -4,22 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#fff1f7">
-    <meta name="description" content="とくべチュ、して">
+    <meta name="description" content="とくべチュ、して。＝LOVEの公式MV、Dance Practice、ライブ映像を楽しむ非公式サイト。">
     <title>とくべチュ、して</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
     <link rel="preload" href="/assets/lettering/title-first-bold.svg" as="image">
     <link rel="preload" href="/assets/lettering/title-second-bold.svg" as="image">
     <link rel="stylesheet" href="/styles.css">
     <script src="/intro.js" defer></script>
-    <noscript><style>.phrase { display: none; } .page-title { position: static; width: auto; height: auto; margin: 0; clip-path: none; font-size: clamp(2rem, 8vw, 6rem); color: #ca648f; }</style></noscript>
+    <script src="/videos.js" defer></script>
+    <noscript><style>.stage { display: none; } .collection { visibility: visible; } .reveal { opacity: 1; transform: none; } .video-controls, .video-poster__play { display: none; }</style></noscript>
   </head>
   <body>
     <div class="ambient" aria-hidden="true">
       <div class="ambient__pink"></div>
       <div class="ambient__lilac"></div>
     </div>
-    <main class="stage">
-      <h1 class="page-title">とくべチュ、して</h1>
+    <div class="stage" aria-hidden="true">
       <div class="phrase phrase--first" aria-hidden="true">
         <div class="phrase__motion">
           <img class="phrase__image" src="/assets/lettering/title-first-bold.svg" alt="" draggable="false">
@@ -30,6 +30,65 @@
           <img class="phrase__image" src="/assets/lettering/title-second-bold.svg" alt="" draggable="false">
         </div>
       </div>
+    </div>
+    <main class="collection">
+      <header class="collection__header reveal">
+        <h1 class="collection__title">とくべチュ、して</h1>
+        <p class="collection__artist">＝LOVE</p>
+      </header>
+      <section class="video-gallery" aria-label="とくべチュ、しての公式動画">
+        <div class="video-controls reveal">
+          <div class="video-tabs" aria-label="動画を選ぶ">
+            <button class="video-tab" type="button" data-slide="0" aria-pressed="true">Music Video</button>
+            <button class="video-tab" type="button" data-slide="1" aria-pressed="false">Dance Practice</button>
+            <button class="video-tab" type="button" data-slide="2" aria-pressed="false">Live</button>
+          </div>
+          <div class="video-arrows">
+            <button class="video-arrow" type="button" data-direction="-1" aria-label="前の動画" disabled>←</button>
+            <button class="video-arrow" type="button" data-direction="1" aria-label="次の動画">→</button>
+          </div>
+        </div>
+        <div class="video-track reveal" tabindex="0" role="region" aria-label="公式動画。左右にスクロールして切り替え">
+          <article class="video-slide" aria-label="1 / 3：Music Video" data-video-id="F3P8vcZkIh4">
+            <div class="video-frame">
+              <button class="video-poster" type="button" aria-label="公式MVを再生">
+                <img src="https://i.ytimg.com/vi/F3P8vcZkIh4/maxresdefault.jpg" alt="とくべチュ、して 公式MV" width="1280" height="720" draggable="false">
+                <span class="video-poster__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <div class="video-caption">
+              <h2>Music Video</h2>
+              <a href="https://www.youtube.com/watch?v=F3P8vcZkIh4" target="_blank" rel="noopener noreferrer">YouTubeで見る ↗</a>
+            </div>
+          </article>
+          <article class="video-slide" aria-label="2 / 3：Dance Practice" data-video-id="ZGVXDsrSMRs">
+            <div class="video-frame">
+              <button class="video-poster" type="button" aria-label="Dance Practiceを再生">
+                <img src="https://i.ytimg.com/vi/ZGVXDsrSMRs/maxresdefault.jpg" alt="とくべチュ、して Dance Practice" width="1280" height="720" draggable="false">
+                <span class="video-poster__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <div class="video-caption">
+              <h2>Dance Practice</h2>
+              <a href="https://www.youtube.com/watch?v=ZGVXDsrSMRs" target="_blank" rel="noopener noreferrer">YouTubeで見る ↗</a>
+            </div>
+          </article>
+          <article class="video-slide" aria-label="3 / 3：Live" data-video-id="70GLdTQk-HY">
+            <div class="video-frame">
+              <button class="video-poster" type="button" aria-label="ライブ映像を再生">
+                <img src="https://i.ytimg.com/vi/70GLdTQk-HY/maxresdefault.jpg" alt="とくべチュ、して ARENA TOUR 2025 ライブ映像" width="1280" height="720" draggable="false">
+                <span class="video-poster__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 5v14l11-7z"/></svg></span>
+              </button>
+            </div>
+            <div class="video-caption">
+              <h2>Live <span>ARENA TOUR 2025</span></h2>
+              <a href="https://www.youtube.com/watch?v=70GLdTQk-HY" target="_blank" rel="noopener noreferrer">YouTubeで見る ↗</a>
+            </div>
+          </article>
+        </div>
+        <p class="video-status reveal" aria-live="polite" aria-atomic="true"><span id="video-position">01 / 03 · Music Video</span><span aria-hidden="true">横にスワイプして、もうひとつ。 →</span></p>
+      </section>
+      <footer class="collection__footer reveal">非公式サイト · <a href="https://equal-love.jp/" target="_blank" rel="noopener noreferrer">＝LOVE公式サイト ↗</a></footer>
     </main>
   </body>
 </html>
